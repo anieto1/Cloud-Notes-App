@@ -1,30 +1,43 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className="bg-blue-500 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-white text-lg font-bold">Cloud Notes</h1>
-        <ul className="flex space-x-4">
-          <li>
-            <Link to="/login" className="text-white hover:underline">
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link to="/home" className="text-white hover:underline">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/editor" className="text-white hover:underline">
-              Create Note
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <div className="h-screen w-64 bg-gray-800 text-white flex flex-col">
+      <h2 className="text-center text-2xl font-bold my-4">Cloud Notes</h2>
+      <nav className="flex flex-col space-y-4 px-4">
+        <NavLink
+          to="/home"
+          className={({ isActive }) =>
+            isActive
+              ? "bg-blue-500 text-white p-3 rounded shadow"
+              : "hover:bg-blue-400 hover:text-white p-3 rounded"
+          }
+        >
+          All Notes
+        </NavLink>
+        <NavLink
+          to="/editor"
+          className={({ isActive }) =>
+            isActive
+              ? "bg-blue-500 text-white p-3 rounded shadow"
+              : "hover:bg-blue-400 hover:text-white p-3 rounded"
+          }
+        >
+          New Note
+        </NavLink>
+        <NavLink
+          to="/new-folder"
+          className={({ isActive }) =>
+            isActive
+              ? "bg-blue-500 text-white p-3 rounded shadow"
+              : "hover:bg-blue-400 hover:text-white p-3 rounded"
+          }
+        >
+          New Folder
+        </NavLink>
+      </nav>
+    </div>
   );
 }
 
