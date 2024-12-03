@@ -1,26 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./Components/Navbar";
+import LoginPage from "./Pages/LoginSignup/LoginPage";
 import HomePage from "./Pages/HomePage";
 import NoteEditor from "./Pages/NoteEditor";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   return (
     <Router>
-      <div className="flex">
-        {/* Sidebar Navbar */}
-        <Navbar />
+      <Routes>
+        {/* Login Page */}
+        <Route
+          path="/login"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/home" />
+            ) : (
+              <LoginPage onAuthenticate={() => setIsAuthenticated(true)} />
+            )
+          }
+        />
 
-        {/* Main Content */}
-        <div className="flex-1 p-4 bg-gray-100">
-          <Routes>
-            <Route path="/" element={<Navigate to="/home" />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/editor" element={<NoteEditor />} />
-            <Route path="/new-folder" element={<h2>Create a New Folder Page</h2>} />
-          </Routes>
-        </div>
-      </div>
+        {/* Home Page */}
+        <Route
+          path="/home"
+          element={
+            isAuthenticated ? <HomePage /> : <Navigate to="/login" />
+          }
+        />
+
+        {/* Note Editor */}
+        <Route
+          path="/editor"
+          element={
+            isAuthenticated ? <NoteEditor /> : <Navigate to="/login" />
+          }
+        />
+
+        {/* Default Route */}
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
     </Router>
   );
 }
