@@ -1,14 +1,28 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./LoginPage.css"; // Import the CSS file
 
 function LoginPage({ onAuthenticate }) {
   const [isLogin, setIsLogin] = useState(true); // Tracks whether we're in login or signup mode
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    onAuthenticate(); // Call the authentication logic
+    navigate("/home"); // Redirect to the home page
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    onAuthenticate(); // Call the authentication logic
+    navigate("/home"); // Redirect to the home page
+  };
 
   return (
     <div className="wrapper">
       <div className="title-text">
         <div className={`title ${isLogin ? "login" : "signup"}`}>
-          {isLogin ? "Welcome Back!" : "Signup Today!"}
+          {isLogin ? "Login Form" : "Signup Form"}
         </div>
       </div>
       <div className="form-container">
@@ -37,14 +51,7 @@ function LoginPage({ onAuthenticate }) {
         </div>
         <div className="form-inner">
           {isLogin ? (
-            <form
-              action="#"
-              className="login"
-              onSubmit={(e) => {
-                e.preventDefault();
-                onAuthenticate(); // Simulate login
-              }}
-            >
+            <form action="#" className="login" onSubmit={handleLogin}>
               <div className="field">
                 <input type="text" placeholder="Email Address" required />
               </div>
@@ -65,24 +72,14 @@ function LoginPage({ onAuthenticate }) {
                 <button
                   type="button"
                   className="link-button"
-                  onClick={() => setIsLogin(false)} // Switch to signup mode
+                  onClick={() => setIsLogin(false)}
                 >
-                  Signup now!
+                  Signup now
                 </button>
               </div>
             </form>
           ) : (
-            <form
-              action="#"
-              className="signup"
-              onSubmit={(e) => {
-                e.preventDefault();
-                onAuthenticate(); // Simulate signup
-              }}
-            >
-              <div className="field">
-                <input type="text" placeholder="Username" required />
-              </div>
+            <form action="#" className="signup" onSubmit={handleSignup}>
               <div className="field">
                 <input type="text" placeholder="Email Address" required />
               </div>

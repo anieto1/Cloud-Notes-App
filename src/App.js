@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from "./Pages/LoginSignup/LoginPage";
 import HomePage from "./Pages/HomePage";
 import NoteEditor from "./Pages/NoteEditor";
+import MainLayout from "./Components/MainLayout"; // Import the MainLayout
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -10,7 +11,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Login Page */}
+        {/* Login Page - Without Navbar */}
         <Route
           path="/login"
           element={
@@ -22,23 +23,23 @@ function App() {
           }
         />
 
-        {/* Home Page */}
-        <Route
-          path="/home"
-          element={
-            isAuthenticated ? <HomePage /> : <Navigate to="/login" />
-          }
-        />
+        {/* Main Layout with Navbar */}
+        <Route element={<MainLayout />}>
+          <Route
+            path="/home"
+            element={
+              isAuthenticated ? <HomePage /> : <Navigate to="/login" />
+            }
+          />
+          <Route
+            path="/editor"
+            element={
+              isAuthenticated ? <NoteEditor /> : <Navigate to="/login" />
+            }
+          />
+        </Route>
 
-        {/* Note Editor */}
-        <Route
-          path="/editor"
-          element={
-            isAuthenticated ? <NoteEditor /> : <Navigate to="/login" />
-          }
-        />
-
-        {/* Default Route */}
+        {/* Default Redirect */}
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>

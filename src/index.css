@@ -12,6 +12,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.navbar {
+  flex-shrink: 0;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 16px;
+}
+
+.content.login-page {
+  margin: auto; /* Center the login page content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
