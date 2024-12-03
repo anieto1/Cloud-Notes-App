@@ -8,7 +8,7 @@ function LoginPage({ onAuthenticate }) {
     <div className="wrapper">
       <div className="title-text">
         <div className={`title ${isLogin ? "login" : "signup"}`}>
-          {isLogin ? "Login Form" : "Signup Form"}
+          {isLogin ? "Welcome Back!" : "Signup Today!"}
         </div>
       </div>
       <div className="form-container">
@@ -80,6 +80,9 @@ function LoginPage({ onAuthenticate }) {
                 onAuthenticate(); // Simulate signup
               }}
             >
+              <div className="field">
+                <input type="text" placeholder="Username" required />
+              </div>
               <div className="field">
                 <input type="text" placeholder="Email Address" required />
               </div>
