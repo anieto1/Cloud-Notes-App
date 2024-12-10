@@ -18,9 +18,22 @@ code {
   flex-direction: column;
 }
 
-.navbar {
-  flex-shrink: 0;
+.sidebar nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
 }
+
+.sidebar nav a.active-link {
+  background-color: #0059b3;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar nav a.inactive-link:hover {
+  color: #99ccff;
+}
+
 
 .content {
   flex-grow: 1;
