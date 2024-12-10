@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaHome, FaEdit, FaBars, FaFolder } from "react-icons/fa"; // Add icons for better visuals
+import { FaHome, FaPlus, FaSearch } from "react-icons/fa";
 
-function Sidebar() {
-  const [isExpanded, setIsExpanded] = useState(false);
+function Sidebar({ totalNotes }) {
+  const [subjects, setSubjects] = useState([]); // List of subjects
+  const [newSubject, setNewSubject] = useState(""); // Temporary state for new subject input
 
-  const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
+  const handleAddSubject = () => {
+    if (newSubject.trim() !== "") {
+      setSubjects([...subjects, newSubject.trim()]); // Add new subject
+      setNewSubject(""); // Clear the input
+    }
   };
 
   return (
     <div
-      className={`sidebar ${isExpanded ? "expanded" : "collapsed"}`}
+      className="sidebar"
       style={{
         height: "100vh",
-        width: isExpanded ? "200px" : "60px",
-        transition: "width 0.3s ease",
+        width: "250px", // Permanently expanded width
         backgroundColor: "#003366",
         color: "#fff",
         display: "flex",
@@ -24,86 +27,126 @@ function Sidebar() {
         top: 0,
         left: 0,
         overflow: "hidden",
+        padding: "10px",
       }}
     >
-      {/* Toggle Button */}
-      <button
-        onClick={toggleSidebar}
-        style={{
-          background: "none",
-          border: "none",
-          color: "white",
-          fontSize: "24px",
-          cursor: "pointer",
-          padding: "10px",
-        }}
-      >
-        <FaBars />
-      </button>
-
-      {/* Navigation Links */}
-      <nav
+      {/* Search Bar */}
+      <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          alignItems: isExpanded ? "flex-start" : "center",
-          padding: "10px",
+          alignItems: "center",
+          backgroundColor: "#0059b3",
+          borderRadius: "5px",
+          padding: "5px",
+          marginBottom: "20px",
         }}
       >
-        <NavLink
-          to="/home"
+        <FaSearch style={{ marginRight: "10px" }} />
+        <input
+          type="text"
+          placeholder="Search..."
           style={{
+            border: "none",
+            outline: "none",
+            background: "transparent",
             color: "white",
-            textDecoration: "none",
-            margin: "10px 0",
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
+            flexGrow: 1,
           }}
-          className={({ isActive }) =>
-            isActive ? "active-link" : "inactive-link"
-          }
-        >
+        />
+      </div>
+
+      {/* All Notes Button */}
+      <NavLink
+        to="/home"
+        style={{
+          color: "white",
+          textDecoration: "none",
+          margin: "10px 0",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between", // Push counter to the right
+          padding: "10px",
+          borderRadius: "5px",
+        }}
+        className={({ isActive }) =>
+          isActive ? "active-link" : "inactive-link"
+        }
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <FaHome />
-          {isExpanded && <span>Home</span>}
-        </NavLink>
-
-        <NavLink
-          to="/editor"
+          <span>All Notes</span>
+        </div>
+        <span
           style={{
-            color: "white",
-            textDecoration: "none",
-            margin: "10px 0",
+            backgroundColor: "#0059b3",
+            color: "#fff",
+            borderRadius: "12px",
+            padding: "5px 10px",
+            fontSize: "14px",
+          }}
+        >
+          {totalNotes || 0}
+        </span>
+      </NavLink>
+
+      {/* Subjects Section */}
+      <div style={{ marginTop: "20px" }}>
+        <div
+          style={{
             display: "flex",
             alignItems: "center",
             gap: "10px",
+            padding: "0 10px",
           }}
-          className={({ isActive }) =>
-            isActive ? "active-link" : "inactive-link"
-          }
         >
-          <FaEdit />
-          {isExpanded && <span>Edit Note</span>}
-        </NavLink>
+          <FaPlus
+            onClick={handleAddSubject}
+            style={{
+              cursor: "pointer",
+              color: "white",
+              fontSize: "16px",
+            }}
+          />
+          <input
+            type="text"
+            placeholder="Add Subject"
+            value={newSubject}
+            onChange={(e) => setNewSubject(e.target.value)}
+            style={{
+              border: "none",
+              outline: "none",
+              backgroundColor: "#0059b3",
+              color: "white",
+              padding: "5px",
+              borderRadius: "5px",
+              flexGrow: 1,
+            }}
+          />
+        </div>
 
-        <NavLink
-          to="/new-folder"
-          style={{
-            color: "white",
-            textDecoration: "none",
-            margin: "10px 0",
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-          }}
-          className={({ isActive }) =>
-            isActive ? "active-link" : "inactive-link"
-          }
-        >
-          <FaFolder />
-          {isExpanded && <span>New Folder</span>}
-        </NavLink>
-      </nav>
+        {/* List of Subjects */}
+        <div style={{ marginTop: "10px", paddingLeft: "10px" }}>
+          {subjects.map((subject, index) => (
+            <NavLink
+              to={`/subjects/${subject}`}
+              key={index}
+              style={{
+                color: "white",
+                textDecoration: "none",
+                margin: "5px 0",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+              className={({ isActive }) =>
+                isActive ? "active-link" : "inactive-link"
+              }
+            >
+              <span>{subject}</span>
+            </NavLink>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

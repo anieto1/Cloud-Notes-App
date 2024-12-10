@@ -7,6 +7,8 @@ import MainLayout from "./Components/MainLayout";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [notes, setNotes] = useState([]); // Array to store notes
+  const [subjects, setSubjects] = useState(["Math", "Science", "History"]); // Example subjects
 
   return (
     <Router>
@@ -24,24 +26,22 @@ function App() {
         />
 
         {/* Main Layout with Sidebar */}
-        <Route element={<MainLayout />}>
+        <Route
+          element={
+            <MainLayout
+              notes={notes}
+              setNotes={setNotes}
+              subjects={subjects}
+            />
+          }
+        >
           <Route
             path="/home"
-            element={
-              isAuthenticated ? <HomePage /> : <Navigate to="/login" />
-            }
+            element={isAuthenticated ? <HomePage notes={notes} /> : <Navigate to="/login" />}
           />
           <Route
             path="/editor"
-            element={
-              isAuthenticated ? <NoteEditor /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/new-folder"
-            element={
-              isAuthenticated ? <h2>New Folder Page</h2> : <Navigate to="/login" />
-            }
+            element={isAuthenticated ? <NoteEditor /> : <Navigate to="/login" />}
           />
         </Route>
 
