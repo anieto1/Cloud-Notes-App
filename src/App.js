@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./Pages/LoginSignup/LoginPage";
-import HomePage from "./Pages/HomePage";
+import HomePage from "./Pages/HomePage/HomePage";
 import NoteEditor from "./Pages/NoteEditor";
 import MainLayout from "./Components/MainLayout";
 
@@ -47,6 +47,16 @@ function App() {
 
         {/* Default Redirect */}
         <Route path="*" element={<Navigate to="/login" />} />
+        <Route
+    path="/editor/:id"
+    element={
+      isAuthenticated ? (
+        <NoteEditor notes={notes} setNotes={setNotes} />
+      ) : (
+        <Navigate to="/login" />
+      )
+    }
+  />
       </Routes>
     </Router>
   );

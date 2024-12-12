@@ -5,13 +5,15 @@ function Modal({ isOpen, onClose, subjects, onAddNote }) {
   const [selectedSubject, setSelectedSubject] = useState("");
 
   const handleAddNote = () => {
-    if (noteTitle.trim() && selectedSubject) {
-      onAddNote(noteTitle, selectedSubject);
+    if (noteTitle.trim()) {
+      // Use the selectedSubject or default to "Uncategorized" if no subject is chosen
+      const subject = selectedSubject || "Uncategorized";
+      onAddNote(noteTitle, subject);
       setNoteTitle("");
       setSelectedSubject("");
       onClose();
     } else {
-      alert("Please enter a note title and select a subject.");
+      alert("Please enter a note title.");
     }
   };
 
@@ -72,7 +74,7 @@ function Modal({ isOpen, onClose, subjects, onAddNote }) {
               border: "1px solid #ccc",
             }}
           >
-            <option value="">Select a subject</option>
+            <option value="">No Subject</option> {/* Default option for no subject */}
             {subjects.map((subject, index) => (
               <option key={index} value={subject}>
                 {subject}

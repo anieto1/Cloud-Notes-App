@@ -1,0 +1,39 @@
+.homepage {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .homepage h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .notes-list {
+    width: 100%;
+  }
+  
+  .note-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  .note-card:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .note-card h3 {
+    margin: 0 0 10px 0;
+  }
+  
+  .note-card p {
+    margin: 0;
+    color: #555;
+  }
+  

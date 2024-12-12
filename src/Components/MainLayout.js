@@ -52,11 +52,12 @@ function MainLayout({ notes, setNotes, subjects }) {
 
         {/* Modal */}
         <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          subjects={subjects}
-          onAddNote={handleAddNote}
-        />
+  isOpen={isModalOpen}
+  onClose={() => setIsModalOpen(false)}
+  subjects={subjects} // Pass the subjects array
+  onAddNote={handleAddNote}
+/>
+
 
         {/* Render Page Content */}
         <Outlet />
