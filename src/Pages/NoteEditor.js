@@ -6,16 +6,15 @@ function NoteEditor({ notes, setNotes }) {
   const navigate = useNavigate();
   const note = notes.find((note) => note.id === parseInt(id));
 
-  const [content, setContent] = useState(note?.content || "");
-  const [activeTool, setActiveTool] = useState("typing");
+  const [content, setContent] = useState(note?.content || ""); // Note content
+  const [activeTool, setActiveTool] = useState("typing"); // Active tool
+  const canvasRef = useRef(null); // Canvas reference
+  const contextRef = useRef(null); // Canvas context reference
+  const typingLayerRef = useRef(null); // Reference for the typing overlay
 
-  const canvasRef = useRef(null);
-  const contextRef = useRef(null);
-
-  // Initialize canvas on mount
+  // Initialize the canvas
   useEffect(() => {
     if (canvasRef.current) {
-      console.log("Canvas reference found:", canvasRef.current);
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
 
@@ -34,17 +33,11 @@ function NoteEditor({ notes, setNotes }) {
     } else {
       console.error("Canvas reference is null at initialization.");
     }
-  }, []); // Run only once when component mounts
+  }, []);
 
-  // Tool selection
+  // Handle tool selection
   const handleToolChange = (tool) => {
-    if (!contextRef.current) {
-      console.error("Canvas context is not initialized.");
-      return;
-    }
-
     setActiveTool(tool);
-
     if (tool === "highlighting") {
       contextRef.current.strokeStyle = "rgba(255, 255, 0, 0.3)";
       contextRef.current.lineWidth = 20;
@@ -54,7 +47,7 @@ function NoteEditor({ notes, setNotes }) {
     }
   };
 
-  // Mouse handlers for drawing
+  // Drawing handlers
   const handleMouseDown = (e) => {
     if (activeTool === "handwriting" || activeTool === "highlighting") {
       const ctx = contextRef.current;
@@ -78,6 +71,11 @@ function NoteEditor({ notes, setNotes }) {
     }
   };
 
+  // Update typing content
+  const handleTypingChange = (e) => {
+    setContent(e.target.value);
+  };
+
   if (!note) return <p>Note not found!</p>;
 
   return (
@@ -89,6 +87,7 @@ function NoteEditor({ notes, setNotes }) {
         padding: "20px",
         height: "100vh",
         backgroundColor: "#fff",
+        position: "relative",
       }}
     >
       {/* Back Button */}
@@ -162,7 +161,7 @@ function NoteEditor({ notes, setNotes }) {
         </button>
       </div>
 
-      {/* Note Canvas */}
+      {/* Note Canvas with Typing Overlay */}
       <div
         style={{
           width: "8.5in",
@@ -174,16 +173,44 @@ function NoteEditor({ notes, setNotes }) {
           position: "relative",
         }}
       >
+        {/* Canvas */}
         <canvas
           ref={canvasRef}
           style={{
             width: "100%",
             height: "100%",
             cursor: activeTool === "highlighting" ? "crosshair" : "default",
+            zIndex: 1,
+            position: "absolute",
           }}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
+        />
+
+        {/* Typing Overlay */}
+        <textarea
+          ref={typingLayerRef}
+          value={content}
+          onChange={handleTypingChange}
+          style={{
+            display: activeTool === "typing" ? "block" : "none",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            border: "none",
+            outline: "none",
+            resize: "none",
+            fontSize: "16px",
+            fontFamily: "Arial, sans-serif",
+            padding: "10px",
+            backgroundColor: "transparent",
+            color: "black",
+            zIndex: 2, // Ensure it's above the canvas
+          }}
+          placeholder="Start typing your note..."
         />
       </div>
     </div>
