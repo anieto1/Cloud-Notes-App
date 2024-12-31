@@ -1,19 +1,33 @@
 import React, { useState } from "react";
 
-function Modal({ isOpen, onClose, subjects, onAddNote }) {
+function AddNoteModal({ isOpen, onClose, onAddNote, subjects }) {
   const [noteTitle, setNoteTitle] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
 
+  // Handle input change for note title
+  const handleInputChange = (e) => {
+    setNoteTitle(e.target.value);
+  };
+
+  // Handle subject selection
+  const handleSubjectChange = (e) => {
+    setSelectedSubject(e.target.value);
+  };
+
+  // Handle adding the note
   const handleAddNote = () => {
-    if (noteTitle.trim()) {
-      // Use the selectedSubject or default to "Uncategorized" if no subject is chosen
-      const subject = selectedSubject || "Uncategorized";
-      onAddNote(noteTitle, subject);
-      setNoteTitle("");
-      setSelectedSubject("");
-      onClose();
-    } else {
-      alert("Please enter a note title.");
+    if (noteTitle.trim() !== "") {
+      onAddNote(noteTitle, selectedSubject); // Pass note title and subject
+      setNoteTitle(""); // Reset input
+      setSelectedSubject(""); // Reset subject
+      onClose(); // Close the modal
+    }
+  };
+
+  // Handle pressing Enter
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleAddNote();
     }
   };
 
@@ -23,73 +37,69 @@ function Modal({ isOpen, onClose, subjects, onAddNote }) {
     <div
       style={{
         position: "fixed",
-        top: 0,
-        left: 0,
+        top: "0",
+        left: "0",
         width: "100%",
         height: "100%",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 1000,
       }}
     >
       <div
         style={{
-          backgroundColor: "#fff",
+          width: "400px",
+          backgroundColor: "white",
           padding: "20px",
           borderRadius: "8px",
-          width: "400px",
-          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          textAlign: "center",
         }}
       >
-        <h2 style={{ marginBottom: "20px" }}>Create New Note</h2>
-
-        <label style={{ display: "block", marginBottom: "10px" }}>
-          Note Title:
-          <input
-            type="text"
-            value={noteTitle}
-            onChange={(e) => setNoteTitle(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "8px",
-              marginTop: "5px",
-              borderRadius: "4px",
-              border: "1px solid #ccc",
-            }}
-          />
-        </label>
-
-        <label style={{ display: "block", marginBottom: "20px" }}>
-          Subject:
-          <select
-            value={selectedSubject}
-            onChange={(e) => setSelectedSubject(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "8px",
-              marginTop: "5px",
-              borderRadius: "4px",
-              border: "1px solid #ccc",
-            }}
-          >
-            <option value="">No Subject</option> {/* Default option for no subject */}
-            {subjects.map((subject, index) => (
-              <option key={index} value={subject}>
-                {subject}
-              </option>
-            ))}
-          </select>
-        </label>
-
+        <h2 style={{ marginBottom: "20px" }}>Add Note</h2>
+        <input
+          type="text"
+          value={noteTitle}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          placeholder="Enter note title"
+          style={{
+            width: "100%",
+            padding: "10px",
+            fontSize: "16px",
+            marginBottom: "20px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+          }}
+        />
+        <select
+          value={selectedSubject}
+          onChange={handleSubjectChange}
+          style={{
+            width: "100%",
+            padding: "10px",
+            fontSize: "16px",
+            marginBottom: "20px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+          }}
+        >
+          <option value="">Select Subject (Optional)</option>
+          {subjects.map((subject) => (
+            <option key={subject} value={subject}>
+              {subject}
+            </option>
+          ))}
+        </select>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <button
             onClick={onClose}
             style={{
-              padding: "10px 20px",
               backgroundColor: "#ccc",
+              color: "black",
               border: "none",
+              padding: "10px 20px",
               borderRadius: "4px",
               cursor: "pointer",
             }}
@@ -99,10 +109,10 @@ function Modal({ isOpen, onClose, subjects, onAddNote }) {
           <button
             onClick={handleAddNote}
             style={{
-              padding: "10px 20px",
-              backgroundColor: "#0059b3",
-              color: "#fff",
+              backgroundColor: "#0073e6",
+              color: "white",
               border: "none",
+              padding: "10px 20px",
               borderRadius: "4px",
               cursor: "pointer",
             }}
@@ -115,4 +125,4 @@ function Modal({ isOpen, onClose, subjects, onAddNote }) {
   );
 }
 
-export default Modal;
+export default AddNoteModal;

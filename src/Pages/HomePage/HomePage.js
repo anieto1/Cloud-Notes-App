@@ -1,25 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import NoteCard from "../../Components/NoteCard";
+import "./HomePage.css"; // Link to CSS file for clean styling
 
 function HomePage({ notes }) {
   const navigate = useNavigate();
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-      }}
-    >
-      <h1 style={{ marginBottom: "20px", fontSize: "24px", fontWeight: "bold" }}>
-        All Notes
-      </h1>
+    <div className="homepage-container">
+      {/* Top Left Header */}
+      <h1 className="homepage-title">All Notes</h1>
 
-      {/* Notes List */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+      {/* Notes Grid */}
+      <div className="notes-grid">
         {notes.length > 0 ? (
           notes.map((note) => (
             <NoteCard
@@ -29,7 +22,7 @@ function HomePage({ notes }) {
             />
           ))
         ) : (
-          <p>No notes available.</p>
+          <p className="no-notes">No notes available.</p>
         )}
       </div>
     </div>

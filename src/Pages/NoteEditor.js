@@ -70,7 +70,7 @@ function NoteEditor({ notes, setNotes }) {
           fontFamily: "Arial, sans-serif",
           resize: "none",
           outline: "none",
-          marginTop: "60px", // Adds space below the back button
+          marginTop: "80px", // Adds space below the toolbar
         }}
         placeholder="Start writing your note here..."
       />

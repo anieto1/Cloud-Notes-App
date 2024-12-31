@@ -1,39 +1,64 @@
-.homepage {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .homepage h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .notes-list {
-    width: 100%;
-  }
-  
-  .note-card {
-    background-color: #f9f9f9;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-  }
-  
-  .note-card:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .note-card h3 {
-    margin: 0 0 10px 0;
-  }
-  
-  .note-card p {
-    margin: 0;
-    color: #555;
-  }
-  
+/* Full container for the homepage */
+.homepage-container {
+  padding: 20px; /* Consistent padding */
+  box-sizing: border-box; /* Ensure padding doesn't affect layout */
+  min-height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Ensures content aligns to the left */
+}
+
+/* Title positioned at the top-left */
+.homepage-title {
+  margin: 0; /* Remove default margins */
+  margin-bottom: 20px; /* Add spacing below title */
+  font-size: 50px; /* Large font size */
+  font-weight: bold;
+  color: white; /* Title text color */
+  text-align: left; /* Align text to the left */
+}
+
+/* Notes grid for evenly spaced, responsive notes */
+.notes-grid {
+  display: flex;
+  flex-wrap: wrap; /* Wrap notes to the next line */
+  gap: 20px; /* Add spacing between notes */
+  align-items: flex-start; /* Align items at the top of the grid */
+  justify-content: flex-start; /* Align notes to the left */
+  width: 100%; /* Ensure the grid spans the entire container width */
+}
+
+/* Empty notes message styling */
+.no-notes {
+  color: white;
+  font-size: 16px;
+  text-align: left;
+  width: 100%; /* Ensures the message spans the full width */
+}
+
+/* NoteCard styles for consistent sizing and appearance */
+.note-card {
+  background-color: #f9f9f9;
+  padding: 15px;
+  width: 200px; /* Fixed width for cards */
+  height: 250px; /* Fixed height for cards */
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column; /* Ensure content stacks within the card */
+  justify-content: space-between;
+}
+
+.note-card:hover {
+  background-color: #f1f1f1;
+}
+
+.note-card h3 {
+  margin: 0 0 10px 0;
+}
+
+.note-card p {
+  margin: 0;
+  color: #555;
+}
