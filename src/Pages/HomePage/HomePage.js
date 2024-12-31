@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import NoteCard from "../../Components/NoteCard";
-import "./HomePage.css"; // Link to CSS file for clean styling
+import "./HomePage.css";
 
 function HomePage({ notes }) {
   const navigate = useNavigate();
