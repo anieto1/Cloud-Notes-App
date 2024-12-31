@@ -81,7 +81,7 @@ function LoginPage({ onAuthenticate }) {
           ) : (
             <form action="#" className="signup" onSubmit={handleSignup}>
               <div className="field">
-                <input type="text" placeholder="Email Address" required />
+                <input type="email"  id="email" placeholder="Email Address" required />
               </div>
               <div className="field">
                 <input type="password" placeholder="Password" required />
